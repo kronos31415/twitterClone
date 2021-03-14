@@ -11,5 +11,8 @@ const server = app.listen(port, () => {
 });
 
 app.get("/", (req, res, next) => {
-    res.render('home')
+    var payload = {
+        title: 'Welocme'
+    }
+    res.render('home', payload)
 });
