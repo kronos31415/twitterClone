@@ -2,12 +2,31 @@ extends layouts/login-layout.pug
 
 block content 
     .loginContainer
-        h1 Login 
-        form(action="", method="post") 
+        h1 Register 
+        form#registerForm(action="", method="post" onsubmit="") 
             input(type="text", name="firstName", placeholder="First name", required="")
             input(type="text", name="lastName", placeholder="Last name", required="")
             input(type="email", name="email", placeholder="Email", required="")
-            input(type="password", name="password", placeholder="Password", required="")
-            input(type="password", name="password", placeholder="Password", required="")
+            input#password(type="password", name="password", placeholder="Password", required="")
+            input#passwordConf(type="password", name="passwordConf", placeholder="Confirm Password", required="")
             input(type="submit", value="Register")
         a(href="/login")  Have account? Please log in hear
+
+    script.
+        var passwordField = document.getElementById('password')
+        var passwordConf = document.getElementById('passwordConf')
+        var form = document.getElementById('registerForm')
+
+        function validatePasswords() {
+            if(passwordField.value != passwordConf.value) {
+                alert('Passwords do not match')
+                return false
+            } else {
+                form.submit()
+            }
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+            validatePasswords()
+        })

@@ -4,6 +4,9 @@ const port = 3001;
 const middleware = require('./middleware')
 const path = require('path')
 
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const server = app.listen(port, () => {
     console.log("Serwer listen on port " + port)
 });
@@ -19,9 +22,9 @@ app.use("/login", loginRoutes)
 const registerRoutes = require('./routes/registerRoutes')
 app.use("/register", registerRoutes)
 
-app.get("/", middleware.requireLogin, (req, res, next) => {
-    var payload = {
-        title: 'Welocme'
-    }
-    res.render('home', payload)
-});
+// app.get("/", middleware.requireLogin, (req, res, next) => {
+//     var payload = {
+//         title: 'Welocme'
+//     }
+//     res.render('home', payload)
+// });

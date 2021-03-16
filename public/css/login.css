@@ -53,3 +53,7 @@ input[type="password"]:focus {
 .loginContainer a:hover {
     text-decoration: none;
 }
+
+input[type="submit"] {
+    margin-bottom: 10px;
+}
