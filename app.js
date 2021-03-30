@@ -4,7 +4,10 @@ const port = 3001;
 const middleware = require('./middleware')
 const path = require('path')
 
-var bodyParser = require('body-parser')
+bodyParser = require('body-parser')
+mongoose = require("./database")
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const server = app.listen(port, () => {
@@ -19,7 +22,8 @@ app.use(express.static(path.join(__dirname, "public")));
 const loginRoutes = require('./routes/loginRoutes')
 app.use("/login", loginRoutes)
 
-const registerRoutes = require('./routes/registerRoutes')
+const registerRoutes = require('./routes/registerRoutes');
+const { mongo } = require('mongoose');
 app.use("/register", registerRoutes)
 
 // app.get("/", middleware.requireLogin, (req, res, next) => {

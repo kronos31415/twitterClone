@@ -11,7 +11,7 @@ body {
 
 .loginContainer {
     position: absolute;
-    top: calc(50% + 200px);
+    top: calc(50% + 150px);
     padding: 20px;
     width: 80%;
     max-width: 500px;
@@ -22,6 +22,10 @@ body {
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
     -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+.loginContainer p {
+    text-transform: uppercase;
 }
 
 form {
