@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 const router = express.Router()
 const User = require("../schemas/UserSchema")
+const bcrypt = require("bcrypt")
 
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,6 +37,8 @@ router.post("/", async(req, res, next) => {
 
         if (user == null) {
             var data = req.body
+            data.password = await bcrypt.hash(password, 10)
+
             User.create(data)
                 .then((user) => {
                     console.log(user)

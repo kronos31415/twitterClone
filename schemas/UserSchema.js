@@ -9,7 +9,7 @@ const UserSchama = new Schema({
     email: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
     profilePic: { type: String, default: "/images/profilePic.png" }
-})
+}, { timestamps: true })
 
 const User = mongoose.model('User', UserSchama)
 module.exports = User
