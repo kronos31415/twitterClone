@@ -35,7 +35,12 @@ router.post("/", async(req, res, next) => {
             })
 
         if (user == null) {
-            // not found ok
+            var data = req.body
+            User.create(data)
+                .then((user) => {
+                    console.log(user)
+                })
+                // not found ok
         } else {
             if (email == user.email) {
                 payLoad.errorMessage = "Email already taken"
