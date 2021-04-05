@@ -6,6 +6,14 @@ const path = require('path')
 
 bodyParser = require('body-parser')
 mongoose = require("./database")
+const { mongo } = require('mongoose');
+
+const session = require("express-session");
+app.use(session({
+    secret: 'pawcio',
+    resave: false,
+    saveUninitialized: true
+}))
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,12 +31,12 @@ const loginRoutes = require('./routes/loginRoutes')
 app.use("/login", loginRoutes)
 
 const registerRoutes = require('./routes/registerRoutes');
-const { mongo } = require('mongoose');
 app.use("/register", registerRoutes)
 
-// app.get("/", middleware.requireLogin, (req, res, next) => {
-//     var payload = {
-//         title: 'Welocme'
-//     }
-//     res.render('home', payload)
-// });
+app.get("/", middleware.requireLogin, (req, res, next) => {
+    var payload = {
+        title: 'Welocme',
+        userLoggedIn: req.session.user
+    }
+    res.render('home', payload)
+});
