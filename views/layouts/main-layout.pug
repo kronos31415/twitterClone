@@ -6,5 +6,32 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title #{title}
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
+        link(rel="stylesheet", href="/css/main.css")
     body 
-        block content
+        .wrapper 
+            .row 
+                nav.col-2
+                    a(href="/")  
+                        i.fas.fa-dove
+                    a(href="/")  
+                        i.fas.fa-home
+                    a(href="/search")  
+                        i.fas.fa-search
+                    a(href="/notification")  
+                        i.fas.fa-bell
+                    a(href="/messages")  
+                        i.fas.fa-envelope
+                    a(href="/profile")  
+                        i.fas.fa-user
+                    a(href="/logout")  
+                        i.fas.fa-sign-out-alt
+                .mainSectionContainer.col-10.col-md-8
+                    block content
+                .d-none.d-md-block.col2 
+                    span third_column
+        
+        script(src='https://kit.fontawesome.com/16fed3d78e.js' crossorigin='anonymous')
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        
