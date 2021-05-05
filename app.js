@@ -33,9 +33,12 @@ app.use("/login", loginRoutes)
 const registerRoutes = require('./routes/registerRoutes');
 app.use("/register", registerRoutes)
 
+const logoutRoutes = require('./routes/logoutRoute');
+app.use("/logout", logoutRoutes)
+
 app.get("/", middleware.requireLogin, (req, res, next) => {
     var payload = {
-        title: 'Welocme',
+        pageTitle: 'Home',
         userLoggedIn: req.session.user
     }
     res.render('home', payload)
