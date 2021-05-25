@@ -28,10 +28,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Routes
 const loginRoutes = require('./routes/loginRoutes')
-app.use("/login", loginRoutes)
-
 const registerRoutes = require('./routes/registerRoutes');
+
+
+//Api routes
+const postsApiRoute = require('./routes/api/posts')
+
+app.use("/login", loginRoutes)
 app.use("/register", registerRoutes)
+
+app.use("/api/posts", postsApiRoute)
 
 const logoutRoutes = require('./routes/logoutRoute');
 app.use("/logout", logoutRoutes)

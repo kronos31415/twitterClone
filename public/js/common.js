@@ -14,4 +14,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         submitButton.disabled = false
     })
+
+    const submitButton = document.getElementById('submitButton')
+    submitButton.addEventListener('click', () => {
+        var button = document.getElementById('submitButton')
+        var textbox = document.getElementById('postTextarea')
+        console.log(textbox)
+
+        var data = {
+            content: textbox.value
+        }
+
+        $.post("/api/posts", data, (postData, staus, xhr) => {
+            console.log(postData)
+        })
+    })
+
 });
