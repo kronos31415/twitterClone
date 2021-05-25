@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router()
-const User = require("../../schemas/UserSchema")
+const User = require("../../schemas/PostSchema")
 
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }));
