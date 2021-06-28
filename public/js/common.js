@@ -26,14 +26,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         $.post("/api/posts", data, (postData, staus, xhr) => {
             var html = createPostHtml(postData)
-            document.querySelector('.postContainer').prepend(html)
+            $('.postContainer').prepend(html)
             textbox.value = ''
-            button.releasePointerCapture("disabled", true)
+            button.disabled = true
         })
     })
 
     function createPostHtml(postData) {
-        return postData.content
+        var postedBy = postData.postedBy
+        return `<div class='post'>
+
+        <div class='mainContentContainer'>
+            <div class='userImageContainer'>
+                <img src='${postedBy.profilePic}'>
+            </div>
+            <div class='postContentContainer'>
+                <div class='header'>
+                </div>
+                <div class='postBody'>
+                    <span>${postData.content}</span>
+                </div>
+                <div class='postFooter'>
+                </div>
+            </div>
+        </div>
+    </div>`;
     }
 
 });
