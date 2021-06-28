@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 
-const UserSchama = new Schema({
+const UserSchema = new Schema({
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     userName: { type: String, required: true, trim: true, unique: true },
@@ -11,5 +11,5 @@ const UserSchama = new Schema({
     profilePic: { type: String, default: "/images/profilePic.png" }
 }, { timestamps: true })
 
-const User = mongoose.model('User', UserSchama)
+const User = mongoose.model('User', UserSchema)
 module.exports = User

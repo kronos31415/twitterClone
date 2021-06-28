@@ -19,15 +19,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
     submitButton.addEventListener('click', () => {
         var button = document.getElementById('submitButton')
         var textbox = document.getElementById('postTextarea')
-        console.log(textbox)
 
         var data = {
             content: textbox.value
         }
 
         $.post("/api/posts", data, (postData, staus, xhr) => {
-            console.log(postData)
+            var html = createPostHtml(postData)
+            document.querySelector('.postContainer').prepend(html)
+            textbox.value = ''
+            button.releasePointerCapture("disabled", true)
         })
     })
+
+    function createPostHtml(postData) {
+        return postData.content
+    }
 
 });
