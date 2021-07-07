@@ -4,6 +4,8 @@
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(189, 197, 202);
     --spacing: 15px;
+    --grayText: rgb(110, 119, 201);
+    --grayButtonText: rgba(0, 0, 0, 0.40);
 }
 
 * {
@@ -30,6 +32,12 @@ nav {
     flex-direction: column;
     align-items: flex-end;
     height: 100%;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    color: var(--grayButtonText);
 }
 
 nav a {
@@ -112,4 +120,64 @@ nav a:hover {
 
 #submitButton:disabled {
     background-color: var(--blueLight);
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+.displayName {
+    font-weight: bold;
+}
+
+.mainContentContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.postContentContainer {
+    padding-left: var(--spacing);
+    display: flex;
+    flex-direction: column;
+}
+
+.postContentContainer .username,
+.postContentContainer .date {
+    color: var(--grayText);
+}
+
+.postFooter {
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.postFooter .postButtonContainer button {
+    padding: 0 5px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.header a,
+.header span {
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover {
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
+    transition: background-color .3s linear;
 }

@@ -33,7 +33,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
 
     function createPostHtml(postData) {
+        console.log(postData)
         var postedBy = postData.postedBy
+        var displayName = postedBy.firstName + " " + postedBy.lastName
+        var timeStamp = "to do later"
         return `<div class='post'>
 
         <div class='mainContentContainer'>
@@ -42,11 +45,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
             </div>
             <div class='postContentContainer'>
                 <div class='header'>
+                    <a href='/profile/${postedBy.userName}' class='displayName'>${displayName}</a>
+                    <span class='username'>${postedBy.userName}</span>
+                    <span class='date'>${timeStamp}</span>
                 </div>
                 <div class='postBody'>
                     <span>${postData.content}</span>
                 </div>
                 <div class='postFooter'>
+                    <div class='postButtonContainer'>
+                        <button>
+                            <i class='fa fa-comment'></i>
+                        </button>
+                        <button>
+                            <i class='fas fa-retweet'></i>
+                        </button>
+                        <button>
+                            <i class='far fa-heart'></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
