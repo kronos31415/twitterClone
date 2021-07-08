@@ -8,7 +8,13 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get("/", (req, res, next) => {
-
+    Post.find()
+        .populate('postedBy')
+        .then((results) => res.status(200).send(results))
+        .catch((errors) => {
+            res.sendStatus(400)
+            console.log(errors)
+        })
 });
 
 router.post("/", async(req, res, next) => {
