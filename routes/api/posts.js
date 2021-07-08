@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 router.get("/", (req, res, next) => {
     Post.find()
         .populate('postedBy')
+        .sort({ createdAt: -1 })
         .then((results) => res.status(200).send(results))
         .catch((errors) => {
             res.sendStatus(400)
