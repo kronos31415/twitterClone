@@ -6,6 +6,7 @@
     --spacing: 15px;
     --grayText: rgb(110, 119, 201);
     --grayButtonText: rgba(0, 0, 0, 0.40);
+    --red: rgb(299, 34, 28);
 }
 
 * {
@@ -38,6 +39,11 @@ button {
     border: none;
     background-color: transparent;
     color: var(--grayButtonText);
+}
+
+button i,
+button span {
+    pointer-events: none;
 }
 
 nav a {
@@ -180,4 +186,8 @@ nav a:hover {
     color: var(--blue);
     border-radius: 50%;
     transition: background-color .3s linear;
+}
+
+.postButtonContainer.red button.active {
+    color: var(--red);
 }

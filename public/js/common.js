@@ -31,7 +31,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
             button.disabled = true
         })
     })
+
+    $(document).on('click', '.likeButton', function(event) {
+        var button = event.target;
+        var postId = getPostIdFromElement(button)
+        if (postId === undefined) return
+
+        $.ajax({
+            url: `/api/posts/${postId}/like`,
+            type: 'PUT',
+            success: function(postData) {
+                console.log(userLoggedIn)
+                button.querySelector('span').innerText = postData.likes.length || ''
+
+                if (postData.likes.includes(userLoggedIn._id)) {
+                    button.classList.add('active')
+                } else {
+                    button.classList.remove('active')
+                }
+            }
+        })
+    })
 });
+
+function getPostIdFromElement(element) {
+    var isRoot = element.classList.contains('post')
+    var rootElement = isRoot ? element : element.closest(".post")
+    return rootElement.dataset.id
+}
 
 function createPostHtml(postData) {
     var postedBy = postData.postedBy
@@ -42,7 +69,9 @@ function createPostHtml(postData) {
 
     var displayName = postedBy.firstName + " " + postedBy.lastName
     var timeStamp = timeDifference(new Date, new Date(postData.createdAt))
-    return `<div class='post'>
+
+    var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? 'active' : ''
+    return `<div class='post' data-id='${postData._id}'>
 
     <div class='mainContentContainer'>
         <div class='userImageContainer'>
@@ -62,12 +91,18 @@ function createPostHtml(postData) {
                     <button>
                         <i class='fa fa-comment'></i>
                     </button>
-                    <button>
+                </div>
+                <div class='postButtonContainer'>
+                    <button class='reteet'>
                         <i class='fas fa-retweet'></i>
                     </button>
-                    <button>
+                </div>
+                <div class='postButtonContainer red'>
+                    <button class='likeButton ${likeButtonActiveClass}'>
                         <i class='far fa-heart'></i>
+                        <span>${postData.likes.length || ''}</span>
                     </button>
+                </div>
                 </div>
             </div>
         </div>
