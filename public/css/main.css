@@ -4,9 +4,12 @@
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(189, 197, 202);
     --spacing: 15px;
-    --grayText: rgb(110, 119, 201);
+    --grayText: rgb(109, 111, 128);
     --grayButtonText: rgba(0, 0, 0, 0.40);
     --red: rgb(299, 34, 28);
+    --redBackground: rgba(299, 34, 28, 0.2);
+    --green: rgb(71, 245, 31);
+    --greenBackground: rgba(71, 245, 31, 0.2);
 }
 
 * {
@@ -190,4 +193,25 @@ nav a:hover {
 
 .postButtonContainer.red button.active {
     color: var(--red);
+}
+
+.postButtonContainer.red button:hover {
+    color: var(--red);
+    background-color: var(--redBackground);
+}
+
+.postButtonContainer.green button.active {
+    color: var(--green);
+}
+
+.postButtonContainer.green button:hover {
+    color: var(--green);
+    background-color: var(--greenBackground);
+}
+
+.postRetweeted {
+    color: var(--grayText);
+    padding-left: 30px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
 }

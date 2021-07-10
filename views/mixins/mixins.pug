@@ -6,3 +6,17 @@ mixin createPostForm(userLoggedIn)
             textarea#postTextarea(placeholder='Whats up ?') 
             .buttonContainer    
                 button#submitButton() Post
+
+mixin createModalPost(userLoggedIn)
+    #replayModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='replayModalLabel' aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#replayModalLabel.modal-title Replay
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    | ...
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+                    button#submitModalButton.btn.btn-primary(type='button' disabled='') Replay
