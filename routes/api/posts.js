@@ -67,4 +67,37 @@ router.put("/:id/like", async(req, res, next) => {
 
 });
 
+router.post("/:id/retweet", async(req, res, next) => {
+    var postId = req.params.id;
+    var userId = req.session.user._id;
+    var deltedPost = await Post.findOneAndDelete({ postedBy: userId, retweetData: postId })
+        .catch(error => {
+            console.log(error)
+            res.sendStatus(400)
+        })
+
+    var option = deltedPost != null ? '$pull' : '$addToSet'
+
+    return res.send(option)
+
+    // req.session.user = await User.findByIdAndUpdate(userId, {
+    //         [option]: { likes: postId }
+    //     }, { new: true })
+    //     .catch(error => {
+    //         console.log(error)
+    //         res.sendStatus(400)
+    //     })
+
+    // var post = await Post.findByIdAndUpdate(postId, {
+    //         [option]: { likes: userId }
+    //     }, { new: true })
+    //     .catch(error => {
+    //         console.log(error)
+    //         res.sendStatus(400)
+    //     })
+
+    // return res.send(post)
+
+});
+
 module.exports = router
