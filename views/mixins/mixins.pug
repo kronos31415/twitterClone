@@ -16,7 +16,12 @@ mixin createModalPost(userLoggedIn)
                     button.close(type='button' data-dismiss='modal' aria-label='Close')
                     span(aria-hidden='true') &times;
                 .modal-body
-                    | ...
+                    #originalPostContainer
+                    .postFormContainer  
+                        .userImageContainer 
+                            img(src=userLoggedIn.profilePic, alt="User Logged in")
+                        .textareaContainer  
+                            textarea#replayTextarea(placeholder='Whats up ?') 
                 .modal-footer
                     button.btn.btn-secondary(type='button' data-dismiss='modal') Close
                     button#submitModalButton.btn.btn-primary(type='button' disabled='') Replay

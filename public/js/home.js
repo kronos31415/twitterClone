@@ -4,15 +4,3 @@ window.addEventListener('DOMContentLoaded', function(event) {
         outputPosts(response, $('.postContainer'))
     })
 });
-
-function outputPosts(results, container) {
-    container.innerHtml = ''
-    results.forEach(post => {
-        var html = createPostHtml(post);
-        container.append(html);
-    });
-
-    if (results.length == 0) {
-        container.append("<span class='noResults'>Nothing to show</span>")
-    }
-}

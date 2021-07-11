@@ -1,34 +1,68 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     const postTextArea = document.getElementById('postTextarea');
+    const postModalTextArea = document.getElementById('replayTextarea');
 
-    postTextArea.addEventListener('keyup', e => {
-        const value = e.target.value.trim()
+    [postTextArea, postModalTextArea].forEach(element => {
+        element.addEventListener('keyup', function(e) {
+            const value = e.target.value.trim()
+            const textbox = e.target
 
-        const submitButton = document.getElementById('submitButton')
-        if (submitButton.length == 0) return allert("No submit button found")
+            let isModal = hasParentWithMatchingSelector(textbox, '.modal')
+            let submitButton = isModal ? document.getElementById('submitModalButton') : document.getElementById('submitButton')
+            if (submitButton.length == 0) return allert("No submit button found")
 
-        if (value == "") {
-            submitButton.disabled = true
-            return
-        }
+            if (value == "") {
+                submitButton.disabled = true
+                return
+            }
 
-        submitButton.disabled = false
+            submitButton.disabled = false
+
+        })
+    });
+
+    $('#replayModal').on('show.bs.modal', function(event) {
+        var button = event.relatedTarget
+        var postId = getPostIdFromElement(button)
+        document.getElementById('submitModalButton').dataset.id = postId
+        $.get(`/api/posts/${postId}`, (response) => {
+            var newPostContainer = $('#originalPostContainer')
+            outputPosts(response, newPostContainer)
+        })
+    })
+
+    $('#replayModal').on('hidden.bs.modal', function(event) {
+        document.getElementById('originalPostContainer').innerHTML = ''
     })
 
     const submitButton = document.getElementById('submitButton')
-    submitButton.addEventListener('click', () => {
-        var button = document.getElementById('submitButton')
-        var textbox = document.getElementById('postTextarea')
+    const submitModalButton = document.getElementById('submitModalButton');
+    [submitButton, submitModalButton].forEach(element => {
+        element.addEventListener('click', function(event) {
+            var button = event.target
+            let isModal = hasParentWithMatchingSelector(button, '.modal')
+            var textBox = isModal ? document.getElementById('replayTextarea') : document.getElementById('postTextarea')
 
-        var data = {
-            content: textbox.value
-        }
+            var data = {
+                content: textBox.value
+            }
 
-        $.post("/api/posts", data, (postData, staus, xhr) => {
-            var html = createPostHtml(postData)
-            $('.postContainer').prepend(html)
-            textbox.value = ''
-            button.disabled = true
+            if (isModal) {
+                var postId = button.dataset.id
+                data.replayTo = postId
+            }
+
+            $.post("/api/posts", data, (postData, staus, xhr) => {
+                if (postData.replayTo) {
+                    location.reload();
+                } else {
+                    var html = createPostHtml(postData)
+                    $('.postContainer').prepend(html)
+                    textBox.value = ''
+                    button.disabled = true
+                }
+            })
+
         })
     })
 
@@ -41,7 +75,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             url: `/api/posts/${postId}/like`,
             type: 'PUT',
             success: function(postData) {
-                console.log(userLoggedIn)
+                // console.log(userLoggedIn)
                 button.querySelector('span').innerText = postData.likes.length || ''
 
                 if (postData.likes.includes(userLoggedIn._id)) {
@@ -75,6 +109,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
 });
 
+function hasParentWithMatchingSelector(target, selector) {
+    return [...document.querySelectorAll(selector)].some(el =>
+        el !== target && el.contains(target)
+    )
+}
+
+
 function getPostIdFromElement(element) {
     var isRoot = element.classList.contains('post')
     var rootElement = isRoot ? element : element.closest(".post")
@@ -82,7 +123,7 @@ function getPostIdFromElement(element) {
 }
 
 function createPostHtml(postData) {
-    console.log(postData)
+    // console.log(postData)
     if (postData == null) alert("post object is null")
     var isRetweet = postData.retweetData !== undefined;
     var retweetedBy = isRetweet ? postData.postedBy.userName : null;
@@ -102,11 +143,10 @@ function createPostHtml(postData) {
 
     var retweetText = '';
     if (isRetweet) {
-        retweetText = `<span>retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a></span>`
+        retweetText = `<i class='fas fa-retweet'></i><span>retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a></span>`
     }
     return `<div class='post' data-id='${postData._id}'>
     <div class='postRetweeted'>
-        <i class='fas fa-retweet'></i>
         ${retweetText}
     </div>
     <div class='mainContentContainer'>
@@ -170,5 +210,19 @@ function timeDifference(current, previous) {
         return Math.round(elapsed / msPerMonth) + ' months ago';
     } else {
         return Math.round(elapsed / msPerYear) + ' years ago';
+    }
+}
+
+function outputPosts(results, container) {
+    container.innerHtml = ''
+    if (!Array.isArray(results))
+        results = [results]
+    results.forEach(post => {
+        var html = createPostHtml(post);
+        container.append(html);
+    });
+
+    if (results.length == 0) {
+        container.append("<span class='noResults'>Nothing to show</span>")
     }
 }
