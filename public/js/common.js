@@ -107,6 +107,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         })
     })
+
+    $(document).on('click', '.post', function(event) {
+        var element = event.target;
+        var postId = getPostIdFromElement(element)
+        if (postId !== undefined && element.tagName != 'BUTTON') {
+            console.log(element.tagName)
+            window.location.href = `/post/${postId}`
+        }
+
+    })
 });
 
 function hasParentWithMatchingSelector(target, selector) {
