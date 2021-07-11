@@ -145,6 +145,18 @@ function createPostHtml(postData) {
     if (isRetweet) {
         retweetText = `<i class='fas fa-retweet'></i><span>retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a></span>`
     }
+
+    var replyFlag = '';
+    if (postData.replayTo) {
+        if (!postData.replayTo._id) {
+            return alert("Replay to is not poulated")
+        }
+        var replayUser = postData.replayTo.postedBy.userName
+        replyFlag = `<div class='replayFlag'>
+                            Replying to <a href='/profile/${replayUser}'>@${replayUser}</a>
+                        </div>`
+    }
+
     return `<div class='post' data-id='${postData._id}'>
     <div class='postRetweeted'>
         ${retweetText}
@@ -159,6 +171,7 @@ function createPostHtml(postData) {
                 <span class='username'>${postedBy.userName}</span>
                 <span class='date'>${timeStamp}</span>
             </div>
+            ${replyFlag}
             <div class='postBody'>
                 <span>${postData.content}</span>
             </div>

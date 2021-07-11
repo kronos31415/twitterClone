@@ -115,9 +115,11 @@ async function getPosts(filter) {
     var results = await Post.find(filter)
         .populate('postedBy')
         .populate('retweetData')
+        .populate('replayTo')
         .sort({ "createdAt": -1 })
         .catch((errors) => console.log(errors))
 
+    results = await User.populate(results, { path: "replayTo.postedBy" })
     return await User.populate(results, { path: "retweetData.postedBy" })
 }
 
