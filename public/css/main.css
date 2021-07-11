@@ -226,3 +226,7 @@ nav a:hover {
     font-size: 0.9rem;
     margin-bottom: 10px;
 }
+
+.postFooter.largeFont {
+    font-size: 1.2rem;
+}

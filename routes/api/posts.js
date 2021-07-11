@@ -14,9 +14,16 @@ router.get("/", async(req, res, next) => {
 
 router.get("/:id", async(req, res, next) => {
     var postId = req.params.id
-    var result = await getPosts({ _id: postId })
-    result = result[0]
-    return res.status(200).send(result)
+    var postData = await getPosts({ _id: postId })
+    postData = postData[0]
+    var results = {
+        postData: postData
+    }
+    if (postData.replayTo !== undefined) {
+        results.replayTo = postData.replayTo
+    }
+    results.replies = await getPosts({ replayTo: postId })
+    return res.status(200).send(results)
 
 });
 

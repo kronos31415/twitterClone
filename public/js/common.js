@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('submitModalButton').dataset.id = postId
         $.get(`/api/posts/${postId}`, (response) => {
             var newPostContainer = $('#originalPostContainer')
-            outputPosts(response, newPostContainer)
+            outputPosts(response.postData, newPostContainer)
         })
     })
 
@@ -131,7 +131,7 @@ function getPostIdFromElement(element) {
     return rootElement.dataset.id
 }
 
-function createPostHtml(postData) {
+function createPostHtml(postData, largeFont = false) {
     // console.log(postData)
     if (postData == null) alert("post object is null")
     var isRetweet = postData.retweetData !== undefined;
@@ -157,7 +157,7 @@ function createPostHtml(postData) {
 
     var replyFlag = '';
     if (postData.replayTo) {
-        if (!postData.replayTo._id) {
+        if (!postData.replayTo._id && postData.replayTo._id) {
             return alert("Replay to is not poulated")
         }
         var replayUser = postData.replayTo.postedBy.userName
@@ -165,6 +165,8 @@ function createPostHtml(postData) {
                             Replying to <a href='/profile/${replayUser}'>@${replayUser}</a>
                         </div>`
     }
+
+    var largeFontClass = largeFont ? "largeFont" : ""
 
     return `<div class='post' data-id='${postData._id}'>
     <div class='postRetweeted'>
@@ -184,7 +186,7 @@ function createPostHtml(postData) {
             <div class='postBody'>
                 <span>${postData.content}</span>
             </div>
-            <div class='postFooter'>
+            <div class='postFooter ${largeFontClass}'>
                 <div class='postButtonContainer'>
                     <button data-toggle='modal' data-target='#replayModal'>
                         <i class='fa fa-comment'></i>
@@ -247,4 +249,20 @@ function outputPosts(results, container) {
     if (results.length == 0) {
         container.append("<span class='noResults'>Nothing to show</span>")
     }
+}
+
+function outputPostsWithReplies(results, container) {
+    container.innerHtml = ''
+    if (results.replayTo !== undefined && results.replayTo._id !== undefined) {
+        var html = createPostHtml(results.replayTo);
+        container.append(html);
+    }
+
+    var mainPostHtml = createPostHtml(results.postData, true);
+    container.append(mainPostHtml);
+
+    results.replies.forEach(post => {
+        var html = createPostHtml(post);
+        container.append(html);
+    });
 }
