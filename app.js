@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //Routes
 const loginRoutes = require('./routes/loginRoutes')
 const registerRoutes = require('./routes/registerRoutes');
+const postRoutes = require('./routes/postRoutes');
 
 
 //Api routes
@@ -36,6 +37,7 @@ const postsApiRoute = require('./routes/api/posts')
 
 app.use("/login", loginRoutes)
 app.use("/register", registerRoutes)
+app.use("/posts", postRoutes)
 
 app.use("/api/posts", postsApiRoute)
 

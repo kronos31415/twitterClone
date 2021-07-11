@@ -113,7 +113,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         var postId = getPostIdFromElement(element)
         if (postId !== undefined && element.tagName != 'BUTTON') {
             console.log(element.tagName)
-            window.location.href = `/post/${postId}`
+            window.location.href = `/posts/${postId}`
         }
 
     })
@@ -124,7 +124,6 @@ function hasParentWithMatchingSelector(target, selector) {
         el !== target && el.contains(target)
     )
 }
-
 
 function getPostIdFromElement(element) {
     var isRoot = element.classList.contains('post')
