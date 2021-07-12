@@ -25,3 +25,19 @@ mixin createModalPost(userLoggedIn)
                 .modal-footer
                     button.btn.btn-secondary(type='button' data-dismiss='modal') Close
                     button#submitModalButton.btn.btn-primary(type='button' disabled='') Replay
+mixin createDeletePostModal(userLoggedIn)
+    #deltePostModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='deleteModalLabel' aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#deleteModalLabel.modal-title Delete
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    p You wont be able to delte it
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+                    button#deletePostButton.btn.btn-primary(type='button') Replay
+mixin createPostmodals(userLoggedIn)
+    +createModalPost(userLoggedIn)
+    +createDeletePostModal(userLoggedIn)

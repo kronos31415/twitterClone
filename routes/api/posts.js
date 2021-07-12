@@ -27,6 +27,17 @@ router.get("/:id", async(req, res, next) => {
 
 });
 
+router.delete("/:id", async(req, res, next) => {
+    var postId = req.params.id
+    Post.findByIdAndDelete(postId)
+        .then(() => res.sendStatus(202))
+        .catch((errors) => {
+            console.log(errors)
+            res.sendStatus(404)
+        })
+
+});
+
 router.post("/", async(req, res, next) => {
 
     if (!req.body.content) {

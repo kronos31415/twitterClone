@@ -164,6 +164,7 @@ nav a:hover {
     padding-left: var(--spacing);
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .postContentContainer .username,
@@ -229,4 +230,20 @@ nav a:hover {
 
 .postFooter.largeFont {
     font-size: 1.2rem;
+}
+
+.header {
+    display: flex;
+}
+
+.header .date {
+    flex: 1;
+}
+
+.header button {
+    transition: transform .5s ease-in-out;
+}
+
+.header button:hover {
+    transform: rotate(180deg);
 }
