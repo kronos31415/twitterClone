@@ -1,8 +1,19 @@
 extends layouts/main-layout.pug
 
 block content 
-    span #{userLoggedIn.firstName}
-    .postContainer
-    +createPostmodals(userLoggedIn)
+    if !profileUser
+        span.errorMessage Check if url is good
+    else 
+        .profileHeaderContainer 
+            .coverPhotoContainer 
+
+                .userImageContainer     
+                    img(src=profileUser.profilePic, alt="User profile pic")
+            .profileButtonContainer
+                if profileUser._id != userLoggedIn._id 
+                    a.profileButton(href=`/messages/${profileUser._id}`)
+                        i.fas.fa-envelope
+        .postContainer
+        +createPostmodals(userLoggedIn)
 block scripts 
     script(src="/js/profile.js")

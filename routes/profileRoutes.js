@@ -8,11 +8,12 @@ var bodyParser = require('body-parser')
 
 router.get("/", (req, res, next) => {
     console.log(req.session.user)
+    var user = req.session.user
     var payload = {
-        pageTitle: req.session.user.userName,
-        userLoggedIn: req.session.user,
+        pageTitle: user.userName,
+        userLoggedIn: user,
         userLoggedInJs: JSON.stringify(req.session.user),
-        profileUser: req.session.user
+        profileUser: user
     }
     res.status(200).render('profilePage', payload)
 });
@@ -25,11 +26,15 @@ router.get("/:username", async(req, res, next) => {
 async function getPayload(username, userLoggedIn) {
     var user = await User.findOne({ userName: username })
     if (user == null) {
-        return {
-            pageTitle: "User not found",
-            userLoggedIn: userLoggedIn,
-            userLoggedInJs: JSON.stringify(userLoggedIn),
+        user = await User.findById({ username })
+        if (user == null) {
+            return {
+                pageTitle: "User not found",
+                userLoggedIn: userLoggedIn,
+                userLoggedInJs: JSON.stringify(userLoggedIn),
+            }
         }
+
     }
     return {
         pageTitle: user.userName,

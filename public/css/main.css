@@ -1,5 +1,6 @@
 :root {
     --blue: #1FA2F1;
+    --blueBackgroundColor: rgba(183, 220, 240, 0.6);
     --blueLight: #9BD1F9;
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(189, 197, 202);
@@ -246,4 +247,44 @@ nav a:hover {
 
 .header button:hover {
     transform: rotate(180deg);
+}
+
+.errorMessage {
+    padding: var(--spacing);
+}
+
+.profileHeaderContainer .coverPhotoContainer {
+    height: 180px;
+    background-color: var(--blue);
+    position: relative;
+}
+
+.profileHeaderContainer .userImageContainer {
+    height: 132px;
+    width: 132px;
+    position: absolute;
+    bottom: -66px;
+    padding-left: var(--spacing);
+}
+
+.profileHeaderContainer .userImageContainer img {
+    border: 5px solid #fff;
+}
+
+.profileHeaderContainer .profileButtonContainer {
+    text-align: right;
+    padding: var(--spacing);
+}
+
+.profileButton {
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    padding: 5px 15px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-left: var(--spacing);
+}
+
+.profileButton:hover {
+    background-color: var(--blueBackgroundColor);
 }
