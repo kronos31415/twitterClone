@@ -276,7 +276,8 @@ nav a:hover {
     padding: var(--spacing);
 }
 
-.profileButton {
+.profileButton,
+.followButton {
     border: 1px solid var(--blue);
     color: var(--blue);
     padding: 5px 15px;
@@ -285,6 +286,35 @@ nav a:hover {
     margin-left: var(--spacing);
 }
 
-.profileButton:hover {
+.profileButton:hover,
+.followButton:hover {
     background-color: var(--blueBackgroundColor);
+}
+
+.followButton.following {
+    background-color: var(--blue);
+    color: #fff;
+}
+
+.profileHeaderContainer .userDetailsConatainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--spacing)
+}
+
+.followersContainer .value {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.followersContainer span:not(.value) {
+    color: var(--grayText);
+}
+
+.followersContainer a {
+    margin-right: 15px;
+}
+
+.followersContainer a:hover {
+    border-bottom: 1px solid #000
 }
