@@ -318,3 +318,29 @@ nav a:hover {
 .followersContainer a:hover {
     border-bottom: 1px solid #000
 }
+
+.tabsContainer {
+    display: flex;
+    /* padding: 0 var(--spacing); */
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+.tabsContainer .tab {
+    flex: 1;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: var(--grayText);
+}
+
+.tab.active {
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+}
+
+.tab:hover {
+    color: var(--blue);
+    background-color: var(--blueBackgroundColor);
+}

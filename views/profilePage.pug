@@ -26,6 +26,9 @@ block content
                         span.value #{0}
                         span Followers
         .postContainer
+        .tabsContainer
+            +createTab("Posts", `/profile/${profileUser.userName}`, true)
+            +createTab("Replies", `/profile/${profileUser.userName}/replies`, false)
         +createPostmodals(userLoggedIn)
 block scripts 
     script(src="/js/profile.js")
