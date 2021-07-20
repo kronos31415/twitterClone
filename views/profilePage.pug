@@ -4,6 +4,9 @@ block content
     if !profileUser
         span.errorMessage Check if url is good
     else 
+        script.
+            var profileUserId = '!{profileUser._id}'
+            var selectedTab = '!{selectedTab}'
         .profileHeaderContainer 
             .coverPhotoContainer 
 
@@ -25,10 +28,10 @@ block content
                     a(href=`profile/${profileUser.userName}/folowers`) 
                         span.value #{0}
                         span Followers
-        .postContainer
         .tabsContainer
-            +createTab("Posts", `/profile/${profileUser.userName}`, true)
-            +createTab("Replies", `/profile/${profileUser.userName}/replies`, false)
+            +createTab("Posts", `/profile/${profileUser.userName}`, selectedTab != 'replies')
+            +createTab("Replies", `/profile/${profileUser.userName}/replies`, selectedTab == 'replies')
+        .postContainer
         +createPostmodals(userLoggedIn)
 block scripts 
     script(src="/js/profile.js")

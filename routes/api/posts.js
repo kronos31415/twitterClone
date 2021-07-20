@@ -8,7 +8,16 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get("/", async(req, res, next) => {
-    var posts = await getPosts({});
+    var searchOb = req.query
+
+    if (searchOb.isReplay != undefined) {
+        var isReplay = searchOb.isReplay == 'true'
+        searchOb.replayTo = { $exists: isReplay }
+        delete searchOb.isReplay
+    }
+
+
+    var posts = await getPosts(searchOb);
     return res.status(200).send(posts)
 });
 
