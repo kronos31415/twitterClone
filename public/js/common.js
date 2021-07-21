@@ -2,24 +2,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const postTextArea = document.getElementById('postTextarea');
     const postModalTextArea = document.getElementById('replayTextarea');
 
-    [postTextArea, postModalTextArea].forEach(element => {
-        element.addEventListener('keyup', function(e) {
-            const value = e.target.value.trim()
-            const textbox = e.target
+    if (postTextArea && postModalTextArea)
+        [postTextArea, postModalTextArea].forEach(element => {
+            element.addEventListener('keyup', function(e) {
+                const value = e.target.value.trim()
+                const textbox = e.target
 
-            let isModal = hasParentWithMatchingSelector(textbox, '.modal')
-            let submitButton = isModal ? document.getElementById('submitModalButton') : document.getElementById('submitButton')
-            if (submitButton.length == 0) return allert("No submit button found")
+                let isModal = hasParentWithMatchingSelector(textbox, '.modal')
+                let submitButton = isModal ? document.getElementById('submitModalButton') : document.getElementById('submitButton')
+                if (submitButton.length == 0) return allert("No submit button found")
 
-            if (value == "") {
-                submitButton.disabled = true
-                return
-            }
+                if (value == "") {
+                    submitButton.disabled = true
+                    return
+                }
 
-            submitButton.disabled = false
+                submitButton.disabled = false
 
-        })
-    });
+            })
+        });
 
     $('#replayModal').on('show.bs.modal', function(event) {
         var button = event.relatedTarget
@@ -57,34 +58,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     const submitButton = document.getElementById('submitButton')
     const submitModalButton = document.getElementById('submitModalButton');
-    [submitButton, submitModalButton].forEach(element => {
-        element.addEventListener('click', function(event) {
-            var button = event.target
-            let isModal = hasParentWithMatchingSelector(button, '.modal')
-            var textBox = isModal ? document.getElementById('replayTextarea') : document.getElementById('postTextarea')
+    if (submitButton && submitModalButton)
+        [submitButton, submitModalButton].forEach(element => {
+            element.addEventListener('click', function(event) {
+                var button = event.target
+                let isModal = hasParentWithMatchingSelector(button, '.modal')
+                var textBox = isModal ? document.getElementById('replayTextarea') : document.getElementById('postTextarea')
 
-            var data = {
-                content: textBox.value
-            }
-
-            if (isModal) {
-                var postId = button.dataset.id
-                data.replayTo = postId
-            }
-
-            $.post("/api/posts", data, (postData, staus, xhr) => {
-                if (postData.replayTo) {
-                    location.reload();
-                } else {
-                    var html = createPostHtml(postData)
-                    $('.postContainer').prepend(html)
-                    textBox.value = ''
-                    button.disabled = true
+                var data = {
+                    content: textBox.value
                 }
-            })
 
+                if (isModal) {
+                    var postId = button.dataset.id
+                    data.replayTo = postId
+                }
+
+                $.post("/api/posts", data, (postData, staus, xhr) => {
+                    if (postData.replayTo) {
+                        location.reload();
+                    } else {
+                        var html = createPostHtml(postData)
+                        $('.postContainer').prepend(html)
+                        textBox.value = ''
+                        button.disabled = true
+                    }
+                })
+
+            })
         })
-    })
 
     $(document).on('click', '.likeButton', function(event) {
         var button = event.target;
@@ -135,6 +137,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
             console.log(element.tagName)
             window.location.href = `/posts/${postId}`
         }
+
+    })
+
+    $(document).on('click', '.followButton ', function(event) {
+        var button = event.target
+        var userId = button.dataset.user
+        $.ajax({
+            url: `/api/users/${userId}/follow`,
+            type: 'PUT',
+            success: function(data) {
+                console.log(data)
+                    // button.querySelector('span').innerText = postData.retweetUsers.length || ''
+
+                // if (postData.retweetUsers.includes(userLoggedIn._id)) {
+                //     button.classList.add('active')
+                // } else {
+                //     button.classList.remove('active')
+                // }
+            }
+        })
 
     })
 });
