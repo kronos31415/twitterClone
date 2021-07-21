@@ -146,15 +146,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
         $.ajax({
             url: `/api/users/${userId}/follow`,
             type: 'PUT',
-            success: function(data) {
-                console.log(data)
-                    // button.querySelector('span').innerText = postData.retweetUsers.length || ''
+            success: function(data, status, xhr) {
 
-                // if (postData.retweetUsers.includes(userLoggedIn._id)) {
-                //     button.classList.add('active')
-                // } else {
-                //     button.classList.remove('active')
-                // }
+                if (xhr.status == 404) {
+                    alert("user not found")
+                    return
+                }
+
+
+                var difference = 1
+                if (data.followings && data.followings.includes(userId)) {
+                    button.classList.add('following')
+                    button.text = 'Following'
+                } else {
+                    difference = -1
+                    button.classList.remove('following')
+                    button.text = 'Follow'
+                }
+
+                var followersLabel = document.getElementById('followersValue')
+                if (followersLabel) {
+                    var followersText = followersLabel.innerText
+                    followersText = parseInt(followersText)
+
+                    followersLabel.innerText = followersText + difference
+                }
             }
         })
 
